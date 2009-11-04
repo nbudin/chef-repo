@@ -5,6 +5,7 @@ remote_file "/tmp/#{ree_filename}" do
 end
 
 package "ruby-enterprise" do
-  action :upgrade
+  provider Chef::Provider::Package::Dpkg
+  action :install
   source "/tmp/#{ree_filename}"
 end
