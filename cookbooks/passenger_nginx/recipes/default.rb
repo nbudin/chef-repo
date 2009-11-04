@@ -1,4 +1,4 @@
-include_recipe "ruby-enterprise-edition"
+include_recipe "ruby_enterprise_edition"
 
 nginx_filename = ["nginx", node[:nginx][:version], ].join("-")+".tar.gz"
 
