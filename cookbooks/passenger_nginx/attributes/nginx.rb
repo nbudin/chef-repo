@@ -1,6 +1,7 @@
 default.nginx[:version] = "0.7.63"
 
-default.nginx[:dir]     = "/etc/nginx"
+default.nginx[:dir]     = "/opt/nginx"
+default.nginx[:conf_dir] = "/etc/nginx"
 default.nginx[:log_dir] = "/var/log/nginx"
 default.nginx[:user]    = "www-data"
 default.nginx[:group]   = "www-data"

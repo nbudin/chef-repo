@@ -23,6 +23,11 @@ execute "passenger-install-nginx-module" do
   creates node[:nginx][:dir]
 end
 
+link node[:nginx][:conf_dir] do
+  link_type :symbolic
+  to "#{node[:nginx][:dir]/conf}"
+end
+
 service "nginx" do
   supports :status => true, :restart => true, :reload => true
 end
