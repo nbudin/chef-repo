@@ -1,8 +1,9 @@
+include_recipe "ruby-enterprise-edition"
+
 nginx_filename = ["nginx", node[:nginx][:version], ].join("-")+".tar.gz"
 
 package "libxslt1.1"
 package "libopenssl-dev"
-recipe "ruby-enterprise-edition"
 
 remote_file "/tmp/#{nginx_filename}" do
   source nginx_filename
