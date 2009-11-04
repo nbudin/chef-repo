@@ -1,6 +1,7 @@
 include_recipe "ruby_enterprise_edition"
 
-nginx_filename = ["nginx", node[:nginx][:version], ].join("-")+".tar.gz"
+nginx_filename = ["nginx", node[:nginx][:version] ].join("-")+".tar.gz"
+nginx_src = ["nginx", node[:nginx][:version]].join("-")
 
 package "build-essential"
 package "libxslt1.1"
@@ -11,8 +12,14 @@ remote_file "/tmp/#{nginx_filename}" do
   source nginx_filename
 end
 
+execute "tar" do
+  cwd "/tmp"
+  command "tar xfz #{nginx_filename}"
+  creates "/tmp/#{nginx_src}"
+end
+
 execute "passenger-install-nginx-module" do
-  command "/usr/local/bin/passenger-install-nginx-module --auto --nginx-source=/tmp/#{nginx_filename} --extra-configure-flags=--with_http_ssl_module --prefix=#{node[:nginx][:dir]}"
+  command "/usr/local/bin/passenger-install-nginx-module --auto --nginx-source=/tmp/#{nginx_src} --extra-configure-flags=--with_http_ssl_module --prefix=#{node[:nginx][:dir]}"
   creates node[:nginx][:dir]
 end
 
