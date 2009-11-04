@@ -1,5 +1,4 @@
-default.nginx[:version] = "0.7.62-0~ppa1"
-default.nginx[:architecture] = "amd64"
+default.nginx[:version] = "0.7.63"
 
 default.nginx[:dir]     = "/etc/nginx"
 default.nginx[:log_dir] = "/var/log/nginx"
