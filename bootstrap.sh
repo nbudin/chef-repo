@@ -2,7 +2,7 @@
 
 PATH=/var/lib/gems/1.8/bin:$PATH
 
-apt-get -y install ruby git-core rubygems ruby-dev build-essential
+apt-get -y install ruby git-core rubygems ruby-dev libopenssl-ruby build-essential
 gem sources -a http://gems.opscode.com
 gem install ohai json rake --no-ri --no-rdoc
 gem install chef --no-ri --no-rdoc
