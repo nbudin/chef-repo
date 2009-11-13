@@ -12,6 +12,9 @@ cd chef-repo
 rake install
 cd ..
 
+echo 'file_cache_path "/tmp/chef-solo"' >/etc/chef/solo.rb
+echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
+
 echo '{' >server-config.json
 echo ' "ree": { "architecture": "i386" },' >>server-config.json
 echo ' "recipes": ["passenger_nginx"]' >>server-config.json
