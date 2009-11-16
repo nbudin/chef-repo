@@ -28,10 +28,9 @@ link node[:nginx][:conf_dir] do
   to "#{node[:nginx][:dir]}/conf"
 end
 
-directory node[:nginx][:log_dir] do
-  mode 0755
-  owner node[:nginx][:user]
-  action :create
+link node[:nginx][:log_dir] do
+  link_type :symbolic
+  to "#{node[:nginx][:dir]}/logs"
 end
 
 %w{nxensite nxdissite}.each do |nxscript|
