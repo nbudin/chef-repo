@@ -28,10 +28,6 @@ link node[:nginx][:conf_dir] do
   to "#{node[:nginx][:dir]}/conf"
 end
 
-service "nginx" do
-  supports :status => true, :restart => true, :reload => true
-end
-
 directory node[:nginx][:log_dir] do
   mode 0755
   owner node[:nginx][:user]
@@ -54,6 +50,15 @@ template "nginx.conf" do
   group "root"
   mode 0644
   notifies :reload, resources(:service => "nginx")
+end
+
+template "init-script" do
+  path "/etc/init.d/nginx"
+  source "init-script.erb"
+  owner "root"
+  group "root"
+  mode 755
+  notifies :restart, resources(:service => "nginx")
 end
 
 directory "/etc/nginx/helpers"
