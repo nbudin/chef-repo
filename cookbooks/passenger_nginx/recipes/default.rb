@@ -73,6 +73,8 @@ node[:nginx][:helpers].each do |h|
   end
 end
 
+directory "/etc/nginx/conf.d"
+
 # server-wide defaults, automatically loaded
 node[:nginx][:extras].each do |ex|
   template "/etc/nginx/conf.d/#{ex}.conf" do
