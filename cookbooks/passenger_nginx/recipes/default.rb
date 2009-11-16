@@ -43,6 +43,10 @@ end
   end
 end
 
+service "nginx" do
+  action [ :enable, :start ]
+end
+
 template "nginx.conf" do
   path "#{node[:nginx][:dir]}/nginx.conf"
   source "nginx.conf.erb"
@@ -77,6 +81,3 @@ node[:nginx][:extras].each do |ex|
   end
 end  
 
-service "nginx" do
-  action [ :enable, :start ]
-end
