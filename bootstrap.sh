@@ -1,8 +1,11 @@
 #!/bin/sh
 
-PATH=/var/lib/gems/1.8/bin:$PATH
+RUBY_ENTERPRISE_URL=http://rubyforge.org/frs/download.php/66164/ruby-enterprise_1.8.7-2009.10_i386.deb
 
-apt-get -y install ruby git-core rubygems ruby-dev libopenssl-ruby build-essential
+apt-get -y install git-core build-essential
+curl $RUBY_ENTERPRISE_URL >/tmp/ruby-enterprise.deb
+dpkg -i /tmp/ruby-enterprise.deb
+
 gem sources -a http://gems.opscode.com
 gem install ohai json rake --no-ri --no-rdoc
 gem install chef --no-ri --no-rdoc
