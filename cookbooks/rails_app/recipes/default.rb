@@ -47,7 +47,8 @@ include_recipe "passenger_nginx"
   end
 end
 
-database_server = search(:node, "database_master:true").map {|n| n['fqdn']}.first
+database_server = node[:railsapp][:db][:server] || "localhost"
+#database_server = search(:node, "database_master:true").map {|n| n['fqdn']}.first
 
 template "/srv/#{node[:railsapp][:app_name]}/shared/config/database.yml" do
   source "database.yml.erb"
