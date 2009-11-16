@@ -36,9 +36,7 @@ when "mysql"
   include_recipe "mysql::client"
 end
 include_recipe "rails"
-include_recipe "apache2"
-include_recipe "apache2::mod_rewrite"
-include_recipe "apache2::mod_rails"
+include_recipe "passenger_nginx"
 
 %w{config log pids sqlite system}.each do |dir|
   directory "/srv/#{node[:railsapp][:app_name]}/shared/#{dir}" do
@@ -89,6 +87,6 @@ web_app "#{node[:railsapp][:app_name]}" do
   rails_env "production"
 end
 
-apache_site "000-default" do
+nginx_site "000-default" do
   enable false
 end
