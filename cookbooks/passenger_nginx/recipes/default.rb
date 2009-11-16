@@ -53,6 +53,7 @@ end
 
 service "nginx" do
   action [ :enable, :start ]
+  supports [ :start, :stop, :restart, :reload, :status ]
 end
 
 template "nginx.conf" do
