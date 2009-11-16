@@ -43,6 +43,14 @@ end
   end
 end
 
+template "init-script" do
+  path "/etc/init.d/nginx"
+  source "init-script.erb"
+  owner "root"
+  group "root"
+  mode 755
+end
+
 service "nginx" do
   action [ :enable, :start ]
 end
@@ -54,15 +62,6 @@ template "nginx.conf" do
   group "root"
   mode 0644
   notifies :reload, resources(:service => "nginx")
-end
-
-template "init-script" do
-  path "/etc/init.d/nginx"
-  source "init-script.erb"
-  owner "root"
-  group "root"
-  mode 755
-  notifies :restart, resources(:service => "nginx")
 end
 
 directory "/etc/nginx/helpers"
