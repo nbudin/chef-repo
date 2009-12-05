@@ -18,8 +18,10 @@ cd ..
 echo 'file_cache_path "/tmp/chef-solo"' >/etc/chef/solo.rb
 echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
 
-echo '{' >server-config.json
-echo ' "recipes": ["passenger_nginx"]' >>server-config.json
-echo '}' >>server-config.json
+echo <<EOF >server-config.json
+{
+ "recipes": ["passenger_nginx"]
+}
+EOF
 
 chef-solo -j server-config.json
