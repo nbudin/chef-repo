@@ -27,65 +27,12 @@ r.run_action(:install)
 Gem.clear_paths
 require "chef-deploy"
 
-include_recipe "git"
-case node[:railsapp][:db][:type]
-when "sqlite"
-  include_recipe "sqlite"
-  gem_package "sqlite3-ruby" 
-when "mysql"
-  include_recipe "mysql::client"
-end
-include_recipe "rails"
-include_recipe "passenger_nginx"
-
-%w{config log pids sqlite system}.each do |dir|
-  directory "/srv/#{node[:railsapp][:app_name]}/shared/#{dir}" do
-    recursive true
-    owner "railsdev"
-    group "railsdev"
-    mode "0775"
+node[:rails_apps].each do |name, properties|
+  rails_app name do
+    properties.each do |k, v|
+      send(k, v)
+    end
   end
-end
-
-database_server = node[:railsapp][:db][:server] || "localhost"
-#database_server = search(:node, "database_master:true").map {|n| n['fqdn']}.first
-
-template "/srv/#{node[:railsapp][:app_name]}/shared/config/database.yml" do
-  source "database.yml.erb"
-  owner "railsdev"
-  group "railsdev"
-  variables :database_server => database_server
-  mode "0664"
-end
-
-if node[:railsapp][:db][:type] =~ /sqlite/
-  file "/srv/#{node[:railsapp][:app_name]}/shared/sqlite/production.sqlite3" do
-    owner "railsdev"
-    group "railsdev"
-    mode "0664"
-  end
-end
-
-deploy "/srv/#{node[:railsapp][:app_name]}" do
-  repo "git://github.com/radiant/radiant.git"
-  branch node[:railsapp][:branch]
-  user "railsdev"
-  enable_submodules false
-  migrate node[:railsapp][:migrate]
-  migration_command node[:railsapp][:migrate_command]
-  environment node[:railsapp][:environment]
-  shallow_clone true
-  revision node[:railsapp][:revision]
-  action node[:railsapp][:action].to_sym
-  restart_command "touch tmp/restart.txt"
-end
-
-web_app "#{node[:railsapp][:app_name]}" do
-  docroot "/srv/#{node[:railsapp][:app_name]}/current/public"
-  template "#{node[:railsapp][:app_name]}.conf.erb"
-  server_name "#{node[:railsapp][:app_name]}.#{node[:domain]}"
-  server_aliases [ "#{node[:railsapp][:app_name]}", node[:hostname] ]
-  rails_env "production"
 end
 
 nginx_site "000-default" do
