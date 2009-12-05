@@ -20,7 +20,8 @@ echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
 
 echo <<EOF >server-config.json
 {
- "recipes": ["passenger_nginx"]
+    "ec2" : { },
+    "recipes": ["passenger_nginx"]
 }
 EOF
 
