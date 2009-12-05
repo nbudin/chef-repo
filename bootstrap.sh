@@ -21,7 +21,11 @@ echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
 cat <<EOF >server-config.json
 {
     "ec2" : { },
-    "recipes": ["passenger_nginx"]
+    "rails_apps" :
+      { 
+        "radiant" : {}
+      },
+    "recipes": ["passenger_nginx", "rails_app"]
 }
 EOF
 
