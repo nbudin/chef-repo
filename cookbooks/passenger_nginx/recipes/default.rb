@@ -1,6 +1,8 @@
 nginx_filename = ["nginx", node[:nginx][:version] ].join("-")+".tar.gz"
 nginx_src = ["nginx", node[:nginx][:version]].join("-")
 
+gem 'passenger'
+
 package "build-essential"
 package "libxslt1.1"
 package "libssl-dev"
@@ -60,6 +62,10 @@ template "nginx.conf" do
   group "root"
   mode 0644
   notifies :reload, resources(:service => "nginx")
+  variables {
+    :passenger_ruby => Gem.ruby,
+    :passenger_root => Gem.loaded_specs['passenger'].full_gem_path
+  }
 end
 
 directory "/etc/nginx/helpers"

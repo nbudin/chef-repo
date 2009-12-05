@@ -35,6 +35,9 @@ http {
                     '"$http_user_agent" "$http_x_forwarded_for"';
 
   server_names_hash_bucket_size <%= @node[:nginx][:server_names_hash_bucket_size] %>;
+  
+  passenger_root <%= @passenger_root %>;
+  passenger_ruby <%= @passenger_ruby %>;
 
   <% if @node[:hardware_lb_ip_addresses] %>
   geo  $lb  {
