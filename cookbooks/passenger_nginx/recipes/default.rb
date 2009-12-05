@@ -62,10 +62,10 @@ template "nginx.conf" do
   group "root"
   mode 0644
   notifies :reload, resources(:service => "nginx")
-  variables {
+  variables(
     :passenger_ruby => Gem.ruby,
     :passenger_root => Gem.loaded_specs['passenger'].full_gem_path
-  }
+  )
 end
 
 directory "/etc/nginx/helpers"
