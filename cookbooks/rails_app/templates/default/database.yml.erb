@@ -1,6 +1,6 @@
 production:
   adapter: mysql
-  database: <%= @railsapp[:db][:database] %>
-  username: <%= @railsapp[:db][:user] %>
-  password: <%= @railsapp[:db][:password] %>
-  host: <%= @railsapp[:db][:server] || "localhost" %>
+  database: <%= @params[:db][:database] %>
+  username: <%= @params[:db][:user] %>
+  password: <%= @params[:db][:password] %>
+  host: <%= @params[:db][:server] || "localhost" %>
