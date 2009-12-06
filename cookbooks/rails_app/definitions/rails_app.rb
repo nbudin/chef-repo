@@ -70,11 +70,11 @@ define :rails_app, :deploy => true do
     if params[:cookbook]
       cookbook params[:cookbook]
     end
-    variables {
+    variables(
       :root_dir => root_dir,
       :server_name => server_name,
       :params => params
-    }
+    )
     if File.exists?("#{node[:nginx][:conf_dir]}/sites-enabled/#{params[:name]}.conf")
       notifies :reload, resources(:service => "nginx"), :delayed
     end
