@@ -78,6 +78,8 @@ node[:nginx][:helpers].each do |h|
 end
 
 directory "/etc/nginx/conf.d"
+directory "/etc/nginx/sites-enabled"
+directory "/etc/nginx/sites-available"
 
 # server-wide defaults, automatically loaded
 node[:nginx][:extras].each do |ex|

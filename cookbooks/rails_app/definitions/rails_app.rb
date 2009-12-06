@@ -20,11 +20,18 @@ define :rails_app, :deploy => true do
       mode "0775"
     end
   end
-
+  
+  root_dir = "/srv/#{params[:name]}"
   database_server = params[:db][:server] || "localhost"
+  server_name = case params[:server_name]
+  when Enumerable
+    params[:server_name].join(" ")
+  else
+    params[:server_name].to_s
+  end
   #database_server = search(:node, "database_master:true").map {|n| n['fqdn']}.first
 
-  template "/srv/#{params[:name]}/shared/config/database.yml" do
+  template "#{root_dir}/shared/config/database.yml" do
     source "database.yml.erb"
     owner "www-data"
     group "www-data"
@@ -33,14 +40,15 @@ define :rails_app, :deploy => true do
   end
 
   if params[:db][:type] =~ /sqlite/
-    file "/srv/#{params[:name]}/shared/sqlite/production.sqlite3" do
+    file "#{root_dir}/shared/sqlite/production.sqlite3" do
       owner "www-data"
       group "www-data"
       mode "0664"
     end
   end
 
-  deploy "/srv/#{params[:name]}" do
+
+  deploy root_dir do
     repo params[:repo]
     branch params[:branch]
     user "www-data"
@@ -53,12 +61,26 @@ define :rails_app, :deploy => true do
     action (params[:action] || :nothing).to_sym
     restart_command "touch tmp/restart.txt"
   end
-
-  web_app "#{params[:name]}" do
-    docroot "/srv/#{params[:name]}/current/public"
-    template "#{params[:name]}.conf.erb"
-    server_name "#{params[:name]}.#{node[:domain]}"
-    server_aliases [ "#{params[:name]}", node[:hostname] ]
-    rails_env "production"
+    
+  template "#{node[:nginx][:conf_dir]}/sites-available/#{params[:name]}.conf" do
+    source "rails_app.conf.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    if params[:cookbook]
+      cookbook params[:cookbook]
+    end
+    variables {
+      :root_dir => root_dir,
+      :server_name => server_name,
+      :params => params
+    }
+    if File.exists?("#{node[:nginx][:conf_dir]}/sites-enabled/#{params[:name]}.conf")
+      notifies :reload, resources(:service => "nginx"), :delayed
+    end
+  end
+  
+  nginx_site "#{params[:name]}.conf" do
+    enable enable_setting
   end
 end
