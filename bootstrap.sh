@@ -23,7 +23,16 @@ cat <<EOF >server-config.json
     "ec2" : { },
     "rails_apps" :
       { 
-        "radiant" : {}
+        "radiant" : {
+          "db" : {
+            "type": "mysql",
+            "server": "localhost",
+            "database": "radiant_production",
+            "user": "root",
+            "password": ""
+          },
+          "repo": "http://github.com/radiant/radiant.git"
+        }
       },
     "recipes": ["passenger_nginx", "rails_app"]
 }
