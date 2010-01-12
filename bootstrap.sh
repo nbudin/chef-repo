@@ -18,8 +18,24 @@ cd ..
 echo 'file_cache_path "/tmp/chef-solo"' >/etc/chef/solo.rb
 echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
 
-echo '{' >server-config.json
-echo ' "recipes": ["passenger_nginx"]' >>server-config.json
-echo '}' >>server-config.json
+cat <<EOF >server-config.json
+{
+    "ec2" : { },
+    "rails_apps" :
+      { 
+        "radiant" : {
+          "db" : {
+            "type": "mysql",
+            "server": "localhost",
+            "database": "radiant_production",
+            "user": "root",
+            "password": ""
+          },
+          "repo": "http://github.com/radiant/radiant.git"
+        }
+      },
+    "recipes": ["passenger_nginx", "rails_app"]
+}
+EOF
 
 chef-solo -j server-config.json

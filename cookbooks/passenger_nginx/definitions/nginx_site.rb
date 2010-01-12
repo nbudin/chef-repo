@@ -1,5 +1,5 @@
 define :nginx_site, :enable => true do
-  include_recipe "nginx"
+  include_recipe "passenger_nginx"
 
   if params[:config_path]
     link "#{node[:nginx][:dir]}/sites-available/#{params[:name]}" do
