@@ -62,13 +62,10 @@ template "nginx.conf" do
   group "root"
   mode 0644
   notifies :reload, resources(:service => "nginx")
-<<<<<<< HEAD:cookbooks/passenger_nginx/recipes/default.rb
-=======
   variables(
     :passenger_ruby => Gem.ruby,
     :passenger_root => Gem.loaded_specs['passenger'].full_gem_path
   )
->>>>>>> 674cf5e8011cb8bef2b5941c88b7e47df92cca3a:cookbooks/passenger_nginx/recipes/default.rb
 end
 
 directory "/etc/nginx/helpers"
@@ -81,11 +78,8 @@ node[:nginx][:helpers].each do |h|
 end
 
 directory "/etc/nginx/conf.d"
-<<<<<<< HEAD:cookbooks/passenger_nginx/recipes/default.rb
-=======
 directory "/etc/nginx/sites-enabled"
 directory "/etc/nginx/sites-available"
->>>>>>> 674cf5e8011cb8bef2b5941c88b7e47df92cca3a:cookbooks/passenger_nginx/recipes/default.rb
 
 # server-wide defaults, automatically loaded
 node[:nginx][:extras].each do |ex|
