@@ -49,7 +49,8 @@ define :rails_app, :deploy => true do
 
 
   deploy root_dir do
-    case params[:scm_provider].to_sym
+    scm = params[:scm_provider]
+    case (scm && scm.to_sym)
     when :subversion, :svn
       scm_provider Chef::Provider::Subversion
     else
