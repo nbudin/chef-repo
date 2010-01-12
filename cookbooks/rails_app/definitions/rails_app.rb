@@ -49,7 +49,12 @@ define :rails_app, :deploy => true do
 
 
   deploy root_dir do
-    scm_provider params[:scm_provider]
+    case params[:scm_provider].to_sym
+    when :subversion, :svn
+      scm_provider Chef::Provider::Subversion
+    else
+      scm_provider Chef::Provider::Git
+    end
     repo params[:repo]
     branch params[:branch]
     user "www-data"
