@@ -49,6 +49,7 @@ define :rails_app, :deploy => true do
 
 
   deploy root_dir do
+    scm_provider params[:scm_provider]
     repo params[:repo]
     branch params[:branch]
     user "www-data"
