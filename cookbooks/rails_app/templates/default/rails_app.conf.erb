@@ -4,7 +4,7 @@ server {
 	listen 80;
 	
   location {
-    root <%= @root_dir %>;
+    root <%= @root_dir %>/current;
     passenger_enabled on;
     
     if (-f $document_root/system/maintenance.html) {
