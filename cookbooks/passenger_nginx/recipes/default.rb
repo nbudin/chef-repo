@@ -19,7 +19,7 @@ execute "tar" do
 end
 
 execute "passenger-install-nginx-module" do
-  command "/usr/local/bin/passenger-install-nginx-module --auto --nginx-source=/tmp/#{nginx_src} --extra-configure-flags='--with-http_ssl_module --with-http_rewrite_module' --prefix=#{node[:nginx][:dir]}"
+  command "/usr/local/bin/passenger-install-nginx-module --auto --nginx-source=/tmp/#{nginx_src} --extra-configure-flags='--with-http_ssl_module' --prefix=#{node[:nginx][:dir]}"
   creates node[:nginx][:dir]
 end
 
