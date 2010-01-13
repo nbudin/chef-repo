@@ -9,7 +9,7 @@ package "libssl-dev"
 package "zlib1g-dev"
 
 remote_file "/tmp/#{nginx_filename}" do
-  source nginx_filename
+  source "http://nginx.org/download/nginx-#{node[:nginx][:version]}.tar.gz"
 end
 
 execute "tar" do
