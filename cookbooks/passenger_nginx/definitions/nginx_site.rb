@@ -10,14 +10,18 @@ define :nginx_site, :enable => true do
 
   if params[:enable]
     execute "nxensite #{params[:name]}" do
-      command "/usr/sbin/nxensite #{params[:name]}"
+      link "#{node[:nginx][:dir]}/sites-enabled/#{params[:name]}" do
+        to "#{node[:nginx][:dir]}/sites-available/#{params[:name]}"
+      end
       notifies :restart, resources(:service => "nginx")
       only_if { File.exists?("#{node[:nginx][:dir]}/sites-available/#{params[:name]}") }
       not_if do File.symlink?("#{node[:nginx][:dir]}/sites-enabled/#{params[:name]}") end
     end
   else
     execute "nxdissite #{params[:name]}" do
-      command "/usr/sbin/nxdissite #{params[:name]}"
+      link "#{node[:nginx][:dir]}/sites-enabled/#{params[:name]}" do
+        action :delete
+      end
       notifies :restart, resources(:service => "nginx")
       only_if do File.symlink?("#{node[:nginx][:dir]}/sites-enabled/#{params[:name]}") end
     end
