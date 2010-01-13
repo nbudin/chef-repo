@@ -56,7 +56,7 @@ service "nginx" do
 end
 
 template "nginx.conf" do
-  path "#{node[:nginx][:dir]}/nginx.conf"
+  path "#{node[:nginx][:conf_dir]}/nginx.conf"
   source "nginx.conf.erb"
   owner "root"
   group "root"
