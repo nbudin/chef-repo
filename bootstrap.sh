@@ -26,6 +26,7 @@ cat <<EOF >server-config.json
     "rails_apps" :
       { 
         "radiant" : {
+          "server_name": "localhost",
           "db" : {
             "type": "mysql",
             "server": "localhost",
