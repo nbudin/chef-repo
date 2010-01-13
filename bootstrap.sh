@@ -6,6 +6,8 @@ apt-get -y install git-core build-essential
 wget -O /tmp/ruby-enterprise.deb $RUBY_ENTERPRISE_URL
 dpkg -i /tmp/ruby-enterprise.deb
 
+gem update --system
+gem update -a
 gem sources -a http://gems.opscode.com
 gem install ohai json rake --no-ri --no-rdoc
 gem install chef --no-ri --no-rdoc
