@@ -48,7 +48,7 @@ define :rails_app, :deploy => true do
   end
 
 
-  deploy root_dir do
+  deploy root_dir, :action => "sync" do
     scm = params[:scm_provider]
     case (scm && scm.to_sym)
     when :subversion, :svn
