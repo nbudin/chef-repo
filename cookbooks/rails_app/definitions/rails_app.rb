@@ -24,7 +24,7 @@ define :rails_app, :deploy => true do
   root_dir = "/srv/#{params[:name]}"
   database_server = params[:db][:server] || "localhost"
   server_name = case params[:server_name]
-  when Enumerable
+  when Array
     params[:server_name].join(" ")
   else
     params[:server_name].to_s
