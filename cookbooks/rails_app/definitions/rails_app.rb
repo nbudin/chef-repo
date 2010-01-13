@@ -47,25 +47,24 @@ define :rails_app, :deploy => true do
     end
   end
 
-
-  deploy root_dir, :action => "sync" do
+  deploy root_dir do
     scm = params[:scm_provider]
     case (scm && scm.to_sym)
     when :subversion, :svn
       scm_provider Chef::Provider::Subversion
     else
       scm_provider Chef::Provider::Git
+      enable_submodules true
     end
     repo params[:repo]
     branch params[:branch]
     user "www-data"
-    enable_submodules false
     migrate params[:migrate]
     migration_command params[:migrate_command]
     environment params[:environment]
     shallow_clone true
     revision params[:revision]
-    action (params[:action] || :nothing).to_sym
+    action (params[:action] || :deploy).to_sym
     restart_command "touch tmp/restart.txt"
   end
     
