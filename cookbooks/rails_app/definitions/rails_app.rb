@@ -68,7 +68,7 @@ define :rails_app, :deploy => true do
     restart_command "touch tmp/restart.txt"
   end
     
-  template "#{node[:nginx][:conf_dir]}/sites-available/#{params[:name]}.conf" do
+  template "#{node[:nginx][:conf_dir]}/sites-available/#{params[:name]}" do
     source "rails_app.conf.erb"
     owner "root"
     group "root"
@@ -86,7 +86,7 @@ define :rails_app, :deploy => true do
     end
   end
   
-  nginx_site "#{params[:name]}.conf" do
+  nginx_site "#{params[:name]}" do
     enable true
   end
 end
