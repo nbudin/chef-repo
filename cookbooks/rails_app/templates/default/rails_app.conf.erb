@@ -3,7 +3,7 @@ server {
 	access_log <%= @node[:nginx][:log_dir] %>/<%= @params[:name] %>.access.log main;
 	listen 80;
 	
-  location {
+  location / {
     root <%= @root_dir %>/current;
     passenger_enabled on;
     
