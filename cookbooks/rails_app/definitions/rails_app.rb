@@ -86,7 +86,5 @@ define :rails_app, :deploy => true do
     end
   end
   
-  nginx_site "#{params[:name]}" do
-    enable true
-  end
+  nginx_site params[:name]
 end
