@@ -87,6 +87,6 @@ define :rails_app, :deploy => true do
   end
   
   nginx_site "#{params[:name]}.conf" do
-    enable enable_setting
+    enable true
   end
 end
