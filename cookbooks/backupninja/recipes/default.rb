@@ -1,3 +1,5 @@
+# This only supports Debian-like distributions right now.
+
 package "backupninja" do
   action :install
 end
