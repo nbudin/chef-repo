@@ -23,6 +23,15 @@ echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
 cat <<EOF >server-config.json
 {
     "ec2" : { },
+    "backupninja" : {
+      "report_email" : "natbudin@gmail.com",
+      "duplicity_s3" : {
+        "aws_access_key_id" : "XXXX",
+        "aws_secret_access_key" : "XXXX",
+        "passphrase": "XXXX",
+        "target_url" : "s3+http://nbudin/backups/chef-tester"
+      }
+    },
     "rails_apps" :
       { 
         "radiant" : {
@@ -37,7 +46,7 @@ cat <<EOF >server-config.json
           "repo": "http://github.com/radiant/radiant.git"
         }
       },
-    "recipes": ["passenger_nginx", "rails_app"]
+    "recipes": ["passenger_nginx", "backupninja", "rails_app"]
 }
 EOF
 
