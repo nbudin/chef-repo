@@ -30,6 +30,10 @@ if node[:backupninja][:duplicity_s3]
     action :install
   end
   
+  package "python-boto" do
+    action :install
+  end
+  
   template "/etc/backup.d/90dup.sh" do
     source "90dup.sh.erb"
     owner "root"
