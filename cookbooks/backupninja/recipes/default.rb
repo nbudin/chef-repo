@@ -4,6 +4,10 @@ package "backupninja" do
   action :install
 end
 
+package "debconf-utils" do
+  action :install
+end
+
 template "/etc/backupninja.conf" do
   source "backupninja.conf.erb"
   owner "root"
