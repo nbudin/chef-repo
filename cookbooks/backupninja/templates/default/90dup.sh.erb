@@ -8,7 +8,7 @@ TARGET_URL=<%= @target_url %>
 set -x
 
 duplicity \
-	--full-if-older-than <%= @full_if_older_than %> \
+	--full-if-older-than <%= @full_every %> \
 <% @includes.each { |include| %>    --include '<%= include %>' \
 <% } %>
 <% @excludes.each { |exclude| %>    --exclude '<%= exclude %>' \
