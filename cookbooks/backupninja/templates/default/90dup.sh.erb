@@ -15,5 +15,5 @@ duplicity \
 <% } %>
 	/ "$TARGET_URL"
 	
-duplicity remove-all-but-n-full <%= keep_last_full %> --force "$TARGET_URL"
+duplicity remove-all-but-n-full <%= @keep_last_full %> --force "$TARGET_URL"
 duplicity cleanup --force "$TARGET_URL"
