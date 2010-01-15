@@ -1,0 +1,19 @@
+#!/bin/bash
+
+export AWS_ACCESS_KEY_ID=<%= @aws_access_key_id %>
+export AWS_SECRET_ACCESS_KEY=<%= @aws_secret_access_key %>
+export PASSPHRASE=<%= @passphrase %>
+TARGET_URL=<%= @target_url %>
+
+set -x
+
+duplicity \
+	--full-if-older-than <%= @full_if_older_than %> \
+<% @includes.each { |include| %>    --include '<%= include %>' \
+<% } %>
+<% @excludes.each { |exclude| %>    --exclude '<%= exclude %>' \
+<% } %>
+	/ "$TARGET_URL"
+	
+duplicity remove-all-but-n-full <%= keep_last_full %> --force "$TARGET_URL"
+duplicity cleanup --force "$TARGET_URL"
