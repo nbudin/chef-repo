@@ -22,6 +22,9 @@ echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
 
 cat <<EOF >server-config.json
 {
+    "mysql" : {
+      "server_root_password": ""
+    },
     "ec2" : { },
     "backupninja" : {
       "report_email" : "natbudin@gmail.com",
