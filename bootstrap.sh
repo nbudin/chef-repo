@@ -25,7 +25,6 @@ cat <<EOF >server-config.json
     "mysql" : {
       "server_root_password": ""
     },
-    "ec2" : { },
     "backupninja" : {
       "report_email" : "natbudin@gmail.com",
       "duplicity_s3" : {
