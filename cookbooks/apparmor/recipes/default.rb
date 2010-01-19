@@ -18,7 +18,8 @@
 #
 
 package "apparmor" do
-  action :install
+  action [:enable, :start]
+  supports [ :start, :stop, :restart, :reload, :status ]
 end
 
 service "apparmor"

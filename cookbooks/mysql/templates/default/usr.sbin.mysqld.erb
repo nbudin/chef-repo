@@ -29,6 +29,10 @@
   /var/log/mysql.err rw,
   <%= @node[:mysql][:datadir] %>/ r,
   <%= @node[:mysql][:datadir] %>/** rwk,
+  <% if @node[:mysql][:ec2_path] %>
+    <%= @node[:mysql][:ec2_path] %>/ r,
+    <%= @node[:mysql][:ec2_path] %>/** rwk,
+  <% end %>
   /var/lib/mysql/ r,
   /var/lib/mysql/** rwk,
   /var/log/mysql/ r,
