@@ -46,7 +46,7 @@ cat <<EOF >server-config.json
           "repo": "http://github.com/radiant/radiant.git"
         }
       },
-    "recipes": ["passenger_nginx", "backupninja", "rails_app"]
+    "recipes": ["mysql::server", "passenger_nginx", "backupninja", "rails_app"]
 }
 EOF
 
