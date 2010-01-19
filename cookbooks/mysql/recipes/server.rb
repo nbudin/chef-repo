@@ -62,13 +62,16 @@ template value_for_platform([ "centos", "redhat", "suse" ] => {"default" => "/et
   notifies :restart, resources(:service => "mysql"), :immediately
 end
 
-template "/etc/apparmor.d/usr.sbin.mysqld" do
-  source "usr.sbin.mysqld.erb"
-  only_if { File.directory?("/etc/apparmor.d") }
-  owner "root"
-  group "root"
-  mode "0644"
-  notifies :restart, resources(:service => "apparmor"), :immediately
+if File.directory?("/etc/apparmor.d")
+  include_recipe("apparmor")
+  
+  template "/etc/apparmor.d/usr.sbin.mysqld" do
+    source "usr.sbin.mysqld.erb"
+    owner "root"
+    group "root"
+    mode "0644"
+    notifies :restart, resources(:service => "apparmor"), :immediately
+  end
 end
 
 if (node[:ec2] && ! FileTest.directory?(node[:mysql][:ec2_path]))
