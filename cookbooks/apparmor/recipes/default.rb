@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-package "apparmor" do
-  action [:enable, :start]
+package "apparmor"
+
+service "apparmor" do
+  action [ :enable, :start ]
   supports [ :start, :stop, :restart, :reload, :status ]
 end
-
-service "apparmor"
