@@ -21,8 +21,12 @@ gem_package "scout" do
   source "http://gems.rubyforge.org"
 end
 
+user "scout" do
+  action :create
+end
+
 cron "scout" do
   minute "*/30"
-  user "www-data"
+  user "scout"
   command "#{File.join(File.split(Gem.ruby), "scout")} #{node[:scout][:client_key]}"
 end
