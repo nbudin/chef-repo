@@ -22,6 +22,9 @@ echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
 
 cat <<EOF >server-config.json
 {
+    "gitosis" : {
+      "admin_key" : "ssh-dss AAAAB3NzaC1kc3MAAACBANjHDnv/lnL/9Cd0x39wJM4ROI0lsNKLPOAn50G2Y1eZZDKBKR3mowxiDPDdQWLyvkTyHO9maqR1xytWEZnDH6gnz/K0aaWtgIDI25rEonsVpOliDlgl1NoLWIeu7HygaJZdRKzpyF2gfD+ibuPO5NfOoSqogZHXFocmRSrEJ+kzAAAAFQCrsZbb2qB/w1ZRofQvLsJMbKyhtQAAAIB6TmeVrn2MymgrPWxcKXkst8JePgVOJpb0HapAi0v8Zfdk7pBQrvazMHihoY3Pl3587N+5OOAiLakBjBuLh7asB7THoXRG/bg85vzh60cfcG9dsrZjYdlViTuPbJAiFknIOBvJb3hzZ55EL0qh346WtwIhUs2aWYZ+/yuQ/L4MegAAAIEAnAFk9j7vECU0jqBcWiN/zkQlm/4RFzr/Z9du8xNjrR6JTNfV0mKBLLqGdn+HqbzY7fZ1mOChWNOhy+IJhsQ8Vdnf/qoeVobqkXWJc86OzeuSdRmiz4QqCOZH0basfhZJqdcA7fu6VYSHqBnCN6BNuOak5VcsDq9Mb1rsZIDxsgM= nbudin@nakamura"
+    },
     "postfix" : {
       "mail_type" : "master"
     },
@@ -51,7 +54,7 @@ cat <<EOF >server-config.json
           "repo": "http://github.com/radiant/radiant.git"
         }
       },
-    "recipes": ["postfix", "mysql::server", "passenger_nginx", "backupninja", "rails_app"]
+    "recipes": ["gitosis", "postfix", "mysql::server", "passenger_nginx", "backupninja", "rails_app"]
 }
 EOF
 
