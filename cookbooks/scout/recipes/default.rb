@@ -28,5 +28,5 @@ end
 cron "scout" do
   minute "*/30"
   user "scout"
-  command "#{File.join(File.split(Gem.ruby), "scout")} #{node[:scout][:client_key]}"
+  command "#{File.join(File.split(Gem.ruby).first, "scout")} #{node[:scout][:client_key]}"
 end
