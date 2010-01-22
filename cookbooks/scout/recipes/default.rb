@@ -21,10 +21,8 @@ gem_package "scout" do
   source "http://gems.rubyforge.org"
 end
 
-gem "scout"
-
 cron "scout" do
   minute "*/30"
   user "www-data"
-  command "#{Gem.loaded_specs['scout'].full_gem_path}/bin/scout #{node[:scout][:client_key]}"
+  command "#{File.join(File.split(Gem.ruby), "scout")} #{node[:scout][:client_key]}"
 end
