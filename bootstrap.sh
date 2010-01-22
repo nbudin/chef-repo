@@ -22,6 +22,9 @@ echo 'cookbook_path "/srv/chef/cookbooks"' >>/etc/chef/solo.rb
 
 cat <<EOF >server-config.json
 {
+    "postfix" : {
+      "mail_type" : "master"
+    },
     "mysql" : {
       "server_root_password": ""
     },
@@ -48,7 +51,7 @@ cat <<EOF >server-config.json
           "repo": "http://github.com/radiant/radiant.git"
         }
       },
-    "recipes": ["mysql::server", "passenger_nginx", "backupninja", "rails_app"]
+    "recipes": ["postfix", "mysql::server", "passenger_nginx", "backupninja", "rails_app"]
 }
 EOF
 
