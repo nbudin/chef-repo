@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-gem_package "scout"
+gem_package "scout" do
+  source "http://gems.rubyforge.org"
+end
 
 gem "scout"
 
