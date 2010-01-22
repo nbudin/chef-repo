@@ -23,6 +23,12 @@ end
 
 user "scout" do
   action :create
+  home "/home/scout"
+end
+
+directory "/home/scout" do
+  action :create
+  owner "scout"
 end
 
 cron "scout" do
