@@ -1,6 +1,6 @@
 #!/bin/sh
 
-RUBY_ENTERPRISE_URL=http://rubyforge.org/frs/download.php/66164/ruby-enterprise_1.8.7-2009.10_i386.deb
+RUBY_ENTERPRISE_URL=http://rubyforge.org/frs/download.php/68718/ruby-enterprise_1.8.7-2010.01_i386.deb
 
 apt-get -y install git-core build-essential
 wget -O /tmp/ruby-enterprise.deb $RUBY_ENTERPRISE_URL
