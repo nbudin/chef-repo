@@ -30,7 +30,7 @@ user "gitosis"
 execute "initialize gitosis with ssh key" do
   case node[:platform]
   when "debian", "ubuntu"
-    gitosis_user = "gitotis"
+    gitosis_user = "gitosis"
   end
   command "echo '#{node[:gitosis][:admin_key]}' | sudo -H -u #{gitosis_user} gitosis-init"
   action :run
