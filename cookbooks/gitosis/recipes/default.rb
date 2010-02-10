@@ -25,6 +25,7 @@ package "gitosis" do
   action :install
 end
 
+user "gitosis"
 
 execute "initialize gitosis with ssh key" do
   case node[:platform]
