@@ -39,6 +39,9 @@ if node[:backupninja][:duplicity_s3]
     owner "root"
     group "root"
     mode 0600
+
+    # we can't keep backups of this because backupninja will try to run them
+    backup false
     
     includes = ["/var/spool/cron/crontabs",
                 "/var/backups",
