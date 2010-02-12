@@ -39,5 +39,6 @@ end
 execute "initialize gitosis with ssh key" do
   command "echo '#{node[:gitosis][:admin_key]}' | sudo -H -u #{node[:gitosis][:user]} gitosis-init"
   action :run
+  not_if { File.exists? File.join(git_dir, "gitosis") }
 end
 
