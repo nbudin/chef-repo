@@ -25,14 +25,10 @@ package "gitosis" do
   action :install
 end
 
-user "gitosis"
+user node[:gitosis][:user]
 
 execute "initialize gitosis with ssh key" do
-  case node[:platform]
-  when "debian", "ubuntu"
-    gitosis_user = "gitosis"
-  end
-  command "echo '#{node[:gitosis][:admin_key]}' | sudo -H -u #{gitosis_user} gitosis-init"
+  command "echo '#{node[:gitosis][:admin_key]}' | sudo -H -u #{node[:gitosis][:user]} gitosis-init"
   action :run
 end
 
