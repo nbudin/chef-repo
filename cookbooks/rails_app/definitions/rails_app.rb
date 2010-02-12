@@ -2,6 +2,10 @@ define :rails_app, :deploy => true do
   include_recipe "rails_app"
   include_recipe "git"
 
+  params[:environment]     ||= "production"
+  params[:migrate_command] ||= "rake #{railsapp[:environment]} db:migrate"
+  params[:migrate]         ||= false
+
   params[:db] ||= {}
   params[:db].each do |env_name, db_params|
     case db_params[:type]
@@ -88,7 +92,7 @@ define :rails_app, :deploy => true do
   nginx_site params[:name]
 
   execute "install_gems" do
-    command "rake gems:install RAILS_ENV=#{params[:environment]}"
+    command "rake #{params[:environment]} gems:install"
     cwd File.join(root_dir, "current")
   end
 end
