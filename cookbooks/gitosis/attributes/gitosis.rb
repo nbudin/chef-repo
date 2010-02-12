@@ -17,7 +17,5 @@
 # limitations under the License.
 #
 
-gitosis Mash.new unless attribute?("gitosis")
-
-# Initial Admin SSH Key (generated via ssh-keygen(1))
-gitosis[:admin_key] = "ssh-dss admin-key= admin@example.com"
+set_unless[:gitosis][:admin_key] = "ssh-dss admin-key= admin@example.com"
+set_unless[:gitosis][:user]      = "gitosis"
