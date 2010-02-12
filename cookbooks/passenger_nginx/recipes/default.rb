@@ -10,17 +10,20 @@ package "zlib1g-dev"
 
 remote_file "/tmp/#{nginx_filename}" do
   source "http://nginx.org/download/nginx-#{node[:nginx][:version]}.tar.gz"
+  not_if { File.exists? node[:nginx][:dir] }
 end
 
 execute "tar" do
   cwd "/tmp"
   command "tar xfz #{nginx_filename}"
   creates "/tmp/#{nginx_src}"
+  not_if { File.exists? node[:nginx][:dir] }
 end
 
 execute "passenger-install-nginx-module" do
   command "/usr/local/bin/passenger-install-nginx-module --auto --nginx-source=/tmp/#{nginx_src} --extra-configure-flags='--with-http_ssl_module' --prefix=#{node[:nginx][:dir]}"
   creates node[:nginx][:dir]
+  not_if { File.exists? node[:nginx][:dir] }
 end
 
 link node[:nginx][:conf_dir] do
