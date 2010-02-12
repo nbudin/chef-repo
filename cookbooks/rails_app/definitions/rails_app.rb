@@ -3,7 +3,7 @@ define :rails_app, :deploy => true do
   include_recipe "git"
 
   params[:environment]     ||= "production"
-  params[:migrate_command] ||= "rake #{railsapp[:environment]} db:migrate"
+  params[:migrate_command] ||= "rake #{params[:environment]} db:migrate"
   params[:migrate]         ||= false
 
   params[:db] ||= {}
