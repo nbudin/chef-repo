@@ -1,14 +1,23 @@
 define :rails_app, :deploy => true do
   include_recipe "rails_app"
   include_recipe "git"
-  
-  case params[:db][:type]
-  when "sqlite"
-    include_recipe "sqlite"
-    gem_package "sqlite3-ruby" 
-  when "mysql"
-    include_recipe "mysql::client"
-  end
+
+  params[:db] ||= {}
+  params[:db].each do |env_name, db_params|
+    case db_params[:type]
+    when "sqlite"
+      include_recipe "sqlite"
+      gem_package "sqlite3-ruby" 
+      file "#{root_dir}/shared/sqlite/production.sqlite3" do
+        owner "www-data"
+        group "www-data"
+        mode "0664"
+      end
+    when "mysql"
+      include_recipe "mysql::client"
+    end
+  end  
+
   include_recipe "rails"
   include_recipe "passenger_nginx"
   
@@ -22,29 +31,19 @@ define :rails_app, :deploy => true do
   end
   
   root_dir = "/srv/#{params[:name]}"
-  database_server = params[:db][:server] || "localhost"
   server_name = case params[:server_name]
   when Array
     params[:server_name].join(" ")
   else
     params[:server_name].to_s
   end
-  #database_server = search(:node, "database_master:true").map {|n| n['fqdn']}.first
 
   template "#{root_dir}/shared/config/database.yml" do
     source "database.yml.erb"
     owner "www-data"
     group "www-data"
-    variables :params => params
+    variables :params => params[:db]
     mode "0664"
-  end
-
-  if params[:db][:type] =~ /sqlite/
-    file "#{root_dir}/shared/sqlite/production.sqlite3" do
-      owner "www-data"
-      group "www-data"
-      mode "0664"
-    end
   end
 
   deploy root_dir do

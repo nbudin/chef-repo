@@ -1,6 +1,8 @@
-production:
-  adapter: mysql
-  database: <%= @params[:db][:database] %>
-  username: <%= @params[:db][:user] %>
-  password: <%= @params[:db][:password] %>
-  host: <%= @params[:db][:server] || "localhost" %>
+<% @params.each do |rails_env, db_params| %>
+<%= rails_env %>:
+  adapter: <%= db_params[:type] || "mysql" %>
+  database: <%= db_params[:database] %>
+  username: <%= db_params[:user] %>
+  password: <%= db_params[:password] %>
+  host: <%= db_params[:server] || "localhost" %>
+<% end %>
