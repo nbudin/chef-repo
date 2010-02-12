@@ -18,4 +18,5 @@
 #
 
 package "libmagickcore-dev"
+package "libmagickwand-dev"
 gem_package "rmagick"
