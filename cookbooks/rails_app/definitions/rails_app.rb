@@ -86,4 +86,9 @@ define :rails_app, :deploy => true do
   end
   
   nginx_site params[:name]
+
+  execute "install_gems" do
+    command "rake gems:install"
+    cwd File.join(root_dir, "current")
+  end
 end
