@@ -25,7 +25,16 @@ package "gitosis" do
   action :install
 end
 
-user node[:gitosis][:user]
+git_dir = "/srv/#{node[:gitosis][:user]}"
+user node[:gitosis][:user] do
+  home git_dir
+end
+
+directory git_dir do
+  owner node[:gitosis][:user]
+  mode "0755"
+  action :create
+end
 
 execute "initialize gitosis with ssh key" do
   command "echo '#{node[:gitosis][:admin_key]}' | sudo -H -u #{node[:gitosis][:user]} gitosis-init"
