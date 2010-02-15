@@ -71,6 +71,15 @@ template "nginx.conf" do
   )
 end
 
+template "fastcgi_params" do
+  path "#{node[:nginx][:conf_dir]}/fastcgi_params"
+  source "fastcgi_params.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notified :reload, resources(:service => "nginx")
+end
+
 directory "/etc/nginx/helpers"
 
 # helpers to be included in your vhosts
