@@ -63,6 +63,12 @@ if node[:backupninja][:duplicity_s3]
     
     full_every = node[:backupninja][:duplicity_s3][:full_every] || "30D"
     keep_last_full = node[:backupninja][:duplicity_s3][:keep_last_full] || 3
+
+    target_url = node[:backupninja][:duplicity_s3][:target_url]
+    if target_url
+      target_url << "/" unless target_url =~ /\/$/
+      target_url << node[:fqdn]
+    end
     
     variables(
       :includes => includes,
@@ -70,7 +76,7 @@ if node[:backupninja][:duplicity_s3]
       :aws_access_key_id => node[:backupninja][:duplicity_s3][:aws_access_key_id],
       :aws_secret_access_key => node[:backupninja][:duplicity_s3][:aws_secret_access_key],
       :passphrase => node[:backupninja][:duplicity_s3][:passphrase],
-      :target_url => node[:backupninja][:duplicity_s3][:target_url],
+      :target_url => target_url,
       :full_every => full_every,
       :keep_last_full => keep_last_full
     )
