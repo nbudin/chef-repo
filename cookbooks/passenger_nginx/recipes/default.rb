@@ -77,7 +77,7 @@ template "fastcgi_params" do
   owner "root"
   group "root"
   mode 0644
-  notified :reload, resources(:service => "nginx")
+  notifies :reload, resources(:service => "nginx")
 end
 
 directory "/etc/nginx/helpers"
