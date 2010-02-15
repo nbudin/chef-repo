@@ -30,8 +30,11 @@ template "/etc/default/php5-fcgi" do
   )
 end
 
-template "/etc/init.d/php5-fastcgi" do
+template "/etc/init.d/php5-fcgi" do
   source "init-script.erb"
+  owner "root"
+  group "root"
+  mode 755
 end
 
 node[:php_apps].each do |name, properties|
