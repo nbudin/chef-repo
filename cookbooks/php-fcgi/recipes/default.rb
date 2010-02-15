@@ -20,7 +20,7 @@
 package "php5-cgi"
 package "php5-mysql"
 
-template "/etc/default/php5-fcgi" do
+template "/etc/default/php-fcgi" do
   source "defaults.erb"
   variables(
     :user         => node[:php][:fcgi][:user],
@@ -30,7 +30,7 @@ template "/etc/default/php5-fcgi" do
   )
 end
 
-template "/etc/init.d/php5-fcgi" do
+template "/etc/init.d/php-fcgi" do
   source "init-script.erb"
   owner "root"
   group "root"
