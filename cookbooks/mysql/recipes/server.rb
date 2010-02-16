@@ -114,3 +114,13 @@ execute "mysql-install-privileges" do
   action :nothing
   subscribes :run, resources(:template => "/etc/mysql/grants.sql")
 end
+
+case node[:platform]
+when "debian","ubuntu"
+  template "/etc/mysql/debian.cnf" do
+    source "debian.cnf.erb"
+    mode   "0600"
+    owner  "root"
+    group  "root"
+  end
+end
