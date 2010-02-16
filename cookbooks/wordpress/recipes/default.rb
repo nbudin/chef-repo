@@ -44,10 +44,10 @@ file "/tmp/wp-init.sql" do
   action :nothing
 end
 
-node[:wordpress][:setup][:password] ||= node[:mysql][:server_root_password]
+node[:wordpress][:db][:setup][:password] ||= node[:mysql][:server_root_password]
 execute "Initialize Wordpress database" do
   command("mysql -h #{node[:wordpress][:db][:host]} "+
-      "-u #{node[:wordpress][:setup][:user]} -p#{node[:wordpress][:setup][:password]} "+
+      "-u #{node[:wordpress][:db][:setup][:user]} -p#{node[:wordpress][:db][:setup][:password]} "+
       "#{node[:wordpress][:db][:name]} </tmp/wp-init.sql")
   action :nothing
   notifies :delete, resources(:file => "/tmp/wp-init.sql")
