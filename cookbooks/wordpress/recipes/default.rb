@@ -28,7 +28,7 @@ end
 
 execute "Unpack Wordpress" do
   cwd node[:wordpress][:dir]
-  command "tar --strip-components=1 xfz /tmp/wordpress.tar.gz"
+  command "tar xfz --strip-components=1 /tmp/wordpress.tar.gz"
   user node[:php][:fcgi][:user]
   action :nothing
 end
