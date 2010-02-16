@@ -1,2 +1,2 @@
 CREATE DATABASE IF NOT EXISTS <%= @db[:name] %>;
-GRANT ALL ON <%= @db[:name] %>.* TO '<%= @db[:user] %>'@'<%= node[:fqdn] %>' IDENTIFIED BY '<%= @db[:password] %>';
+GRANT ALL ON <%= @db[:name] %>.* TO '<%= @db[:user] %>'@'<%= @fqdn %>' IDENTIFIED BY '<%= @db[:password] %>';

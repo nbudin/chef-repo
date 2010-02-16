@@ -58,7 +58,8 @@ end
 template "/tmp/wp-init.sql" do
   source "wp-init.sql.erb"
   variables(
-    :db => node[:wordpress][:db]
+    :db => node[:wordpress][:db],
+    :fqdn => node[:fqdn]
   )
   action :nothing
   notifies :run, resources(:execute => "Initialize Wordpress database")
