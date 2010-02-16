@@ -87,6 +87,7 @@ plugins.each do |plugin|
 
   remote_file "/tmp/#{plugin}.zip" do
     source "http://downloads.wordpress.org/plugin/#{plugin}.zip"
+    owner node[:php][:fcgi][:user]
     not_if { File.exists?(dest_dir) || File.exists?(dest_file) }
   end
 
@@ -109,6 +110,7 @@ if node[:wordpress][:theme]
 
   remote_file "/tmp/wp-theme.zip" do
     source node[:wordpress][:theme][:url]
+    owner node[:php][:fcgi][:user]
     not_if { File.exists?(dest_dir) }
   end
 
