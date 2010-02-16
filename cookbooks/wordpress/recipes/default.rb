@@ -72,8 +72,13 @@ template "#{node[:wordpress][:dir]}/wp-config.php" do
   notifies :create, resources(:template => "/tmp/wp-init.sql")
 end
 
-plugins = node[:wordpress][:plugins] || []
 plugins_dir = File.join(node[:wordpress][:dir], "wp-content", "plugins")
+directory plugins_dir do
+  owner node[:php][:fcgi][:user]
+  group node[:nginx][:group]
+end
+
+plugins = node[:wordpress][:plugins] || []
 plugins.each do |plugin|
   dest_dir = File.join(plugins_dir, plugin)
   dest_file = File.join(plugins_dir, "#{plugin}.php")
@@ -92,6 +97,11 @@ plugins.each do |plugin|
 end
 
 themes_dir = File.join(node[:wordpress][:dir], "wp-content", "themes")
+directory themes_dir do
+  owner node[:php][:fcgi][:user]
+  group node[:nginx][:group]
+end
+
 if node[:wordpress][:theme]
   dest_dir = File.join(themes_dir, node[:wordpress][:theme][:dir])
 
