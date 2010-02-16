@@ -27,7 +27,7 @@ remote_file "/tmp/wordpress.tar.gz" do
 end
 
 directory node[:wordpress][:dir] do
-  owner node[:php_fcgi][:user]
+  owner node[:php][:fcgi][:user]
   group node[:nginx][:group]
 end
 
@@ -35,13 +35,13 @@ execute "tar" do
   cwd node[:wordpress][:dir]
   command "tar --strip-components=1 xfz /tmp/wordpress.tar.gz"
   creates File.join(node[:wordpress][:dir], "index.php")
-  user node[:php_fcgi][:user]
+  user node[:php][:fcgi][:user]
 end
 
 node[:wordpress][:db][:host] ||= node[:fqdn]
 
 template "#{node[:wordpress][:dir]}/wp-config.php" do
-  owner node[:php_fcgi][:user]
+  owner node[:php][:fcgi][:user]
   group node[:nginx][:group]
   mode "0640"
   variables(
@@ -86,7 +86,7 @@ plugins.each do |plugin|
   execute "Unpack plugin" do
     cwd plugins_dir
     command "unzip /tmp/#{plugin}.zip"
-    user node[:php_fcgi][:user]
+    user node[:php][:fcgi][:user]
     not_if { File.exists?(dest_dir) || File.exists?(dest_file) }
   end
 end
@@ -103,7 +103,7 @@ if node[:wordpress][:theme]
   execute "Unpack theme" do
     cwd themes_dir
     command "unzip /tmp/wp-theme.zip"
-    user node[:php_fcgi][:user]
+    user node[:php][:fcgi][:user]
     not_if { File.exists?(dest_dir) }
   end
 end
