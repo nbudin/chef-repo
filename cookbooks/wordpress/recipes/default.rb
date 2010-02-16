@@ -79,7 +79,7 @@ plugins.each do |plugin|
   dest_file = File.join(plugins_dir, "#{plugin}.php")
 
   remote_file "/tmp/#{plugin}.zip" do
-    source "http://wordpress.org/plugin/#{plugin}.zip"
+    source "http://downloads.wordpress.org/plugin/#{plugin}.zip"
     not_if { File.exists?(dest_dir) || File.exists?(dest_file) }
   end
 
