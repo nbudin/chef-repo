@@ -44,3 +44,8 @@ node[:php_apps].each do |name, properties|
     end
   end
 end
+
+service "php-fcgi" do
+  action [ :enable, :start ]
+  supports [ :start, :stop, :restart, :reload, :status ]
+end
