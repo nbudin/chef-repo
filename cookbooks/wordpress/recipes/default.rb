@@ -48,9 +48,14 @@ end
 
 node[:wordpress][:db][:setup][:password] ||= node[:mysql][:server_root_password]
 execute "Initialize Wordpress database" do
-  command("mysql -h #{node[:wordpress][:db][:host]} "+
-      "-u #{node[:wordpress][:db][:setup][:user]} -p#{node[:wordpress][:db][:setup][:password]} "+
-      "#{node[:wordpress][:db][:name]} </tmp/wp-init.sql")
+  cmd = "mysql -h #{node[:wordpress][:db][:host]} "
+  cmd << "-u #{node[:wordpress][:db][:setup][:user]} "
+  unless node[:wordpress][:db][:setup][:password] == ""
+    cmd << "-p#{node[:wordpress][:db][:setup][:password]} "
+  end
+  cmd << "#{node[:wordpress][:db][:name]} </tmp/wp-init.sql"
+  
+  command cmd
   action :nothing
   notifies :delete, resources(:file => "/tmp/wp-init.sql")
 end
