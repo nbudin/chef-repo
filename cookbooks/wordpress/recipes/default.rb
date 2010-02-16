@@ -40,23 +40,8 @@ end
 
 node[:wordpress][:db][:host] ||= node[:fqdn]
 
-template "#{node[:wordpress][:dir]}/wp-config.php" do
-  owner node[:php][:fcgi][:user]
-  group node[:nginx][:group]
-  mode "0640"
-  variables(
-    :db => node[:wordpress][:db]
-  )
-  notifies :create, resources(:template => "/tmp/wp-init.sql")
-end
-
-template "/tmp/wp-init.sql" do
-  source "wp-init.sql.erb"
-  variables(
-    :db => node[:wordpress][:db]
-  )
+file "/tmp/wp-init.sql" do
   action :nothing
-  notifies :run, resources(:execute => "Initialize Wordpress database")
 end
 
 node[:wordpress][:setup][:password] ||= node[:mysql][:server_root_password]
@@ -68,8 +53,23 @@ execute "Initialize Wordpress database" do
   notifies :delete, resources(:file => "/tmp/wp-init.sql")
 end
 
-file "/tmp/wp-init.sql" do
+template "/tmp/wp-init.sql" do
+  source "wp-init.sql.erb"
+  variables(
+    :db => node[:wordpress][:db]
+  )
   action :nothing
+  notifies :run, resources(:execute => "Initialize Wordpress database")
+end
+
+template "#{node[:wordpress][:dir]}/wp-config.php" do
+  owner node[:php][:fcgi][:user]
+  group node[:nginx][:group]
+  mode "0640"
+  variables(
+    :db => node[:wordpress][:db]
+  )
+  notifies :create, resources(:template => "/tmp/wp-init.sql")
 end
 
 plugins = node[:wordpress][:plugins] || []
