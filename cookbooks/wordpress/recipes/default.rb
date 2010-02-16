@@ -57,7 +57,7 @@ execute "Initialize Wordpress database" do
   
   command cmd
   action :nothing
-  notifies :delete, resources(:file => "/tmp/wp-init.sql")
+  notifies :delete, resources(:file => "/tmp/wp-init.sql"), :immediately
 end
 
 template "/tmp/wp-init.sql" do
@@ -67,7 +67,7 @@ template "/tmp/wp-init.sql" do
     :fqdn => node[:fqdn]
   )
   action :nothing
-  notifies :run, resources(:execute => "Initialize Wordpress database")
+  notifies :run, resources(:execute => "Initialize Wordpress database"), :immediately
 end
 
 template "#{node[:wordpress][:dir]}/wp-config.php" do
@@ -77,7 +77,7 @@ template "#{node[:wordpress][:dir]}/wp-config.php" do
   variables(
     :db => node[:wordpress][:db]
   )
-  notifies :create, resources(:template => "/tmp/wp-init.sql")
+  notifies :create, resources(:template => "/tmp/wp-init.sql"), :immediately
 end
 
 plugins_dir = File.join(node[:wordpress][:dir], "wp-content", "plugins")
