@@ -38,6 +38,8 @@ execute "tar" do
   user node[:php_fcgi][:user]
 end
 
+node[:wordpress][:db][:host] ||= node[:fqdn]
+
 template "#{node[:wordpress][:dir]}/wp-config.php" do
   owner node[:php_fcgi][:user]
   group node[:nginx][:group]
@@ -57,6 +59,7 @@ template "/tmp/wp-init.sql" do
   notifies :run, resources(:execute => "Initialize Wordpress database")
 end
 
+node[:wordpress][:setup][:password] ||= node[:mysql][:server_root_password]
 execute "Initialize Wordpress database" do
   command("mysql -h #{node[:wordpress][:db][:host]} "+
       "-u #{node[:wordpress][:setup][:user]} -p#{node[:wordpress][:setup][:password]} "+
@@ -105,6 +108,7 @@ if node[:wordpress][:theme]
   end
 end
 
+node[:wordpress][:server_name] ||= node[:fqdn]
 php_fcgi_app "wordpress" do
   server_name node[:wordpress][:server_name]
   dir         node[:wordpress][:dir]
