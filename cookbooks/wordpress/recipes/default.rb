@@ -88,14 +88,14 @@ plugins.each do |plugin|
   remote_file "/tmp/#{plugin}.zip" do
     source "http://downloads.wordpress.org/plugin/#{plugin}.zip"
     owner node[:php][:fcgi][:user]
-    not_if { File.exists?(dest_dir) || File.exists?(dest_file) }
+    not_if { Dir.exists?(dest_dir) || File.exists?(dest_file) }
   end
 
   execute "Unpack plugin" do
     cwd plugins_dir
     command "unzip /tmp/#{plugin}.zip"
     user node[:php][:fcgi][:user]
-    not_if { File.exists?(dest_dir) || File.exists?(dest_file) }
+    not_if { Dir.exists?(dest_dir) || File.exists?(dest_file) }
   end
 end
 
@@ -111,14 +111,14 @@ if node[:wordpress][:theme]
   remote_file "/tmp/wp-theme.zip" do
     source node[:wordpress][:theme][:url]
     owner node[:php][:fcgi][:user]
-    not_if { File.exists?(dest_dir) }
+    not_if { Dir.exists?(dest_dir) }
   end
 
   execute "Unpack theme" do
     cwd themes_dir
     command "unzip /tmp/wp-theme.zip"
     user node[:php][:fcgi][:user]
-    not_if { File.exists?(dest_dir) }
+    not_if { Dir.exists?(dest_dir) }
   end
 end
 
