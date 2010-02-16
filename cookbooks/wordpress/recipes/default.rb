@@ -21,21 +21,22 @@ include_recipe "mysql::client"
 
 package "unzip"
 
-remote_file "/tmp/wordpress.tar.gz" do
-  source "http://wordpress.org/wordpress-#{node[:wordpress][:version]}.tar.gz"
-  not_if { File.exists? node[:wordpress][:dir] }
-end
-
 directory node[:wordpress][:dir] do
   owner node[:php][:fcgi][:user]
   group node[:nginx][:group]
 end
 
-execute "tar" do
+execute "Unpack Wordpress" do
   cwd node[:wordpress][:dir]
   command "tar --strip-components=1 xfz /tmp/wordpress.tar.gz"
-  creates File.join(node[:wordpress][:dir], "index.php")
   user node[:php][:fcgi][:user]
+  action :nothing
+end
+
+remote_file "/tmp/wordpress.tar.gz" do
+  source "http://wordpress.org/wordpress-#{node[:wordpress][:version]}.tar.gz"
+  not_if { File.exists? File.join(node[:wordpress][:dir], "index.php") }
+  notifies :execute, resource(:execute => "Unpack Wordpress"), :immediately
 end
 
 node[:wordpress][:db][:host] ||= node[:fqdn]
