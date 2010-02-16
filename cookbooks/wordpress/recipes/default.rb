@@ -36,7 +36,7 @@ end
 remote_file "/tmp/wordpress.tar.gz" do
   source "http://wordpress.org/wordpress-#{node[:wordpress][:version]}.tar.gz"
   not_if { File.exists? File.join(node[:wordpress][:dir], "index.php") }
-  notifies :execute, resource(:execute => "Unpack Wordpress"), :immediately
+  notifies :execute, resources(:execute => "Unpack Wordpress"), :immediately
 end
 
 node[:wordpress][:db][:host] ||= node[:fqdn]
