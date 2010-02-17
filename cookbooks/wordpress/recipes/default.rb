@@ -94,7 +94,7 @@ plugins.each do |plugin, options|
   remote_file "/tmp/#{plugin}.zip" do
     remote_plugin = "http://downloads.wordpress.org/plugin/"
     if options[:version]
-      remote_plugin << "#{plugin}-#{options[:version]}.zip"
+      remote_plugin << "#{plugin}.#{options[:version]}.zip"
     else
       remote_plugin << "#{plugin}.zip"
     end
