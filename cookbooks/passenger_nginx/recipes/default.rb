@@ -67,7 +67,11 @@ template "nginx.conf" do
   notifies :reload, resources(:service => "nginx")
   variables(
     :passenger_ruby => Gem.ruby,
-    :passenger_root => Gem.loaded_specs['passenger'].full_gem_path
+    :passenger_root => Gem.loaded_specs['passenger'].full_gem_path,
+    :passenger_max_pool_size => node[:nginx][:passenger][:max_pool_size],
+    :passenger_max_instances_per_app => node[:nginx][:passenger][:max_instances_per_app],
+    :passenger_pool_idle_time => node[:nginx][:passenger][:pool_idle_time],
+    :rails_app_spawner_idle_time => node[:nginx][:passenger][:app_spawner_idle_time],
   )
 end
 

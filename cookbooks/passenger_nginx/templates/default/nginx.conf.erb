@@ -39,6 +39,18 @@ http {
   passenger_root <%= @passenger_root %>;
   passenger_ruby <%= @passenger_ruby %>;
   passenger_default_user <%= @node[:nginx][:user] %>;
+  <% if @passenger_max_pool_size -%>
+  passenger_max_pool_size <%= @passenger_max_pool_size %>;
+  <% end -%>
+  <% if @passenger_max_instances_per_app -%>
+  passenger_max_instances_per_app <%= @passenger_max_instances_per_app %>;
+  <% end -%>
+  <% if @passenger_pool_idle_time -%>
+  passenger_pool_idle_time <%= @passenger_pool_idle_time %>;
+  <% end -%>
+  <% if @rails_app_spawner_idle_time -%>
+  rails_app_spawner_idle_time <%= @rails_app_spawner_idle_time %>;
+  <% end -%>
 
   <% if @node[:hardware_lb_ip_addresses] %>
   geo  $lb  {
