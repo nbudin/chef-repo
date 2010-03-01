@@ -27,3 +27,5 @@ default.nginx[:expires][:time] = "max"
 
 default.nginx[:extras] = ['headers']
 default.nginx[:helpers] = ['expires', 'lb_filter']
+
+default.nginx[:passenger] = Mash.new

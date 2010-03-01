@@ -86,13 +86,19 @@ directory plugins_dir do
   group node[:nginx][:group]
 end
 
-plugins = node[:wordpress][:plugins] || []
-plugins.each do |plugin|
+plugins = node[:wordpress][:plugins] || {}
+plugins.each do |plugin, options|
   dest_dir = File.join(plugins_dir, plugin)
   dest_file = File.join(plugins_dir, "#{plugin}.php")
 
   remote_file "/tmp/#{plugin}.zip" do
-    source "http://downloads.wordpress.org/plugin/#{plugin}.zip"
+    remote_plugin = "http://downloads.wordpress.org/plugin/"
+    if options[:version]
+      remote_plugin << "#{plugin}.#{options[:version]}.zip"
+    else
+      remote_plugin << "#{plugin}.zip"
+    end
+    source remote_plugin
     owner node[:php][:fcgi][:user]
     not_if { File.exists?(dest_dir) || File.exists?(dest_file) }
   end
