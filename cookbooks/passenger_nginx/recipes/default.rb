@@ -54,7 +54,7 @@ template "upstart-config" do
 end
 
 service "nginx" do
-  provider Chef::Providers::Service::Upstart
+  provider :upstart
   action [ :enable, :start ]
   supports [ :start, :stop, :restart, :reload, :status ]
 end
