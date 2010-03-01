@@ -53,8 +53,7 @@ template "upstart-config" do
   mode 755
 end
 
-service "nginx" do
-  provider :upstart_service
+upstart_service "nginx" do
   action [ :enable, :start ]
   supports [ :start, :stop, :restart, :reload, :status ]
 end
