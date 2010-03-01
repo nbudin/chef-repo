@@ -51,7 +51,7 @@ template "upstart-config" do
   source "upstart-config.erb"
   owner "root"
   group "root"
-  mode 755
+  mode 0755
 end
 
 service "nginx" do
