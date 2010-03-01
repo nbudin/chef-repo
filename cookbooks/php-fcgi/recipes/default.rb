@@ -32,7 +32,7 @@ template "/etc/default/php-fcgi" do
   )
 end
 
-template "/etc/initphp-fcgi.conf" do
+template "/etc/init/php-fcgi.conf" do
   source "upstart-config.erb"
   owner "root"
   group "root"
