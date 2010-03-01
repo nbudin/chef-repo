@@ -42,32 +42,14 @@ end
 
 node[:wordpress][:db][:host] ||= node[:fqdn]
 
-file "/tmp/wp-init.sql" do
+mysql_database node[:wordpress][:db][:name] do
   action :nothing
-end
 
-node[:wordpress][:db][:setup][:password] ||= node[:mysql][:server_root_password]
-execute "Initialize Wordpress database" do
-  cmd = "mysql -h #{node[:wordpress][:db][:host]} "
-  cmd << "-u #{node[:wordpress][:db][:setup][:user]} "
-  unless node[:wordpress][:db][:setup][:password] == ""
-    cmd << "-p#{node[:wordpress][:db][:setup][:password]} "
-  end
-  cmd << "#{node[:wordpress][:db][:name]} </tmp/wp-init.sql"
-  
-  command cmd
-  action :nothing
-  notifies :delete, resources(:file => "/tmp/wp-init.sql"), :immediately
-end
-
-template "/tmp/wp-init.sql" do
-  source "wp-init.sql.erb"
-  variables(
-    :db => node[:wordpress][:db],
-    :fqdn => node[:fqdn]
-  )
-  action :nothing
-  notifies :run, resources(:execute => "Initialize Wordpress database"), :immediately
+  host node[:wordpress][:db][:host]
+  user node[:wordpress][:db][:user]
+  password node[:wordpress][:db][:password]
+  setup_user node[:wordpress][:db][:setup][:user]
+  setup_password node[:wordpress][:db][:setup][:password]
 end
 
 template "#{node[:wordpress][:dir]}/wp-config.php" do
@@ -77,7 +59,7 @@ template "#{node[:wordpress][:dir]}/wp-config.php" do
   variables(
     :db => node[:wordpress][:db]
   )
-  notifies :create, resources(:template => "/tmp/wp-init.sql"), :immediately
+  notifies :create, resources(:mysql_database => node[:wordpress][:db][:name]), :immediately
 end
 
 plugins_dir = File.join(node[:wordpress][:dir], "wp-content", "plugins")
