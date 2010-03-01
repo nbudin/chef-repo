@@ -1,6 +1,7 @@
 nginx_filename = ["nginx", node[:nginx][:version] ].join("-")+".tar.gz"
 nginx_src = ["nginx", node[:nginx][:version]].join("-")
 
+require 'chef/provider/service/upstart'
 gem 'passenger'
 
 package "build-essential"
@@ -53,7 +54,8 @@ template "upstart-config" do
   mode 755
 end
 
-upstart_service "nginx" do
+service "nginx" do
+  provider Chef::Provider::Service::Upstart
   action [ :enable, :start ]
   supports [ :start, :stop, :restart, :reload, :status ]
 end
