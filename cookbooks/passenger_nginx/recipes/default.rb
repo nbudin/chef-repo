@@ -45,15 +45,16 @@ end
   end
 end
 
-template "init-script" do
-  path "/etc/init.d/nginx"
-  source "init-script.erb"
+template "upstart-config" do
+  path "/etc/init/nginx.conf"
+  source "upstart-config.erb"
   owner "root"
   group "root"
   mode 755
 end
 
 service "nginx" do
+  provider "Chef::Providers::Service::Upstart"
   action [ :enable, :start ]
   supports [ :start, :stop, :restart, :reload, :status ]
 end
