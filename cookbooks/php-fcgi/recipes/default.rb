@@ -22,21 +22,18 @@ package "php5-mysql"
 
 require 'chef/provider/service/upstart'
 
-template "/etc/default/php-fcgi" do
-  source "defaults.erb"
+template "/etc/init/php-fcgi.conf" do
+  source "upstart-config.erb"
+  owner "root"
+  group "root"
+  mode 0755
+
   variables(
     :user         => node[:php][:fcgi][:user],
     :port         => node[:php][:fcgi][:port],
     :children     => node[:php][:fcgi][:children],
     :max_requests => node[:php][:fcgi][:max_requests]
   )
-end
-
-template "/etc/init/php-fcgi.conf" do
-  source "upstart-config.erb"
-  owner "root"
-  group "root"
-  mode 0755
 end
 
 node[:php_apps].each do |name, properties|
