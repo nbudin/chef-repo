@@ -1,4 +1,4 @@
 CREATE DATABASE IF NOT EXISTS <%= @params[:name] %>;
 <% if @params[:user] && @params[:password] -%>
 GRANT ALL ON <%= @params[:name] %>.* TO '<%= @params[:user] %>'@'<%= @fqdn %>' IDENTIFIED BY '<%= @params[:password] %>';
-<% end - %>
+<% end -%>
