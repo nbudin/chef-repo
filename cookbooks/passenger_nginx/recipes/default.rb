@@ -54,7 +54,7 @@ template "upstart-config" do
 end
 
 service "nginx" do
-  provider :upstart
+  provider :upstart_service
   action [ :enable, :start ]
   supports [ :start, :stop, :restart, :reload, :status ]
 end
