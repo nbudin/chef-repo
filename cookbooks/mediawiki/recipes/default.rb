@@ -53,7 +53,7 @@ mysql_database node[:mediawiki][:db][:name] do
   password node[:mediawiki][:db][:password]
 end
 
-node[:wordpress][:server_name] ||= node[:fqdn]
+node[:mediawiki][:server_name] ||= node[:fqdn]
 php_fcgi_app "mediawiki" do
   server_name node[:mediawiki][:server_name]
   dir         node[:mediawiki][:dir]
