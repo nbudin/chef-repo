@@ -33,7 +33,7 @@ end
 
 version_split = node[:mediawiki][:version].split(/\./)
 minor_version = "#{version_split[0]}.#{version_split[1]}"
-url = "http://download.mediawiki.org/mediawiki/#{minor_version}/mediawiki-#{node[:mediawiki][:version]}.tar.gz"
+url = "http://download.wikimedia.org/mediawiki/#{minor_version}/mediawiki-#{node[:mediawiki][:version]}.tar.gz"
 Chef::Log.info "Will get MediaWiki from #{url}"
 
 remote_file "/tmp/mediawiki.tar.gz" do  
