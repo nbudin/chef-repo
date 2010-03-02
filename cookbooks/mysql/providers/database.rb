@@ -4,6 +4,7 @@ action :create do
   Chef::Log.info "mysql_database: creating database"
 
   root_db.query("create database if not exists `#{new_resource.name}`")
+  root_db.query("grant all on `#{new_resource.name}`.* to '#{new_resource.username}'@'localhost' identified by '#{new_resource.password}'")
   root_db.query("grant all on `#{new_resource.name}`.* to '#{new_resource.username}'@'#{node[:fqdn]}' identified by '#{new_resource.password}'")
 end
 
