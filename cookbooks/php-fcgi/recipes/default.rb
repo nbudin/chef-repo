@@ -24,7 +24,7 @@ require 'chef/provider/service/upstart'
 
 service "php-fcgi" do
   provider Chef::Provider::Service::Upstart
-  action [ :enable, :start ]
+  action :nothing
   supports [ :start, :stop, :restart, :reload, :status ]
 end
 
