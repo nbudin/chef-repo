@@ -46,7 +46,7 @@ mysql_database node[:wordpress][:db][:name] do
   action :nothing
 
   host node[:wordpress][:db][:host]
-  user node[:wordpress][:db][:user]
+  username node[:wordpress][:db][:user]
   password node[:wordpress][:db][:password]
 end
 
