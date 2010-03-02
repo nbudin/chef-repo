@@ -6,7 +6,7 @@ server {
   location / {
     root <%= @root_dir %>;
     index index.php;
-    rewrite ^/index.php/([^?]*)(?:\?(.*))? /w/index.php?title=$1&$2;
+    rewrite ^/index.php/([^?]*)(?:\?(.*))? /index.php?title=$1&$2;
   }
 
   location ~ \.php$ {
