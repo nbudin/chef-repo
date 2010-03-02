@@ -31,11 +31,12 @@ execute "Unpack Mediawiki" do
   action :nothing
 end
 
-remote_file "/tmp/mediawiki.tar.gz" do
-  version_split = node[:mediawiki][:version].split(/\./)
-  minor_version = "#{version_split[0]}.#{version_split[1]}"
-  url = "http://download.mediawiki.org/mediawiki/#{minor_version}/mediawiki-#{node[:mediawiki][:version]}.tar.gz"
-  puts url
+version_split = node[:mediawiki][:version].split(/\./)
+minor_version = "#{version_split[0]}.#{version_split[1]}"
+url = "http://download.mediawiki.org/mediawiki/#{minor_version}/mediawiki-#{node[:mediawiki][:version]}.tar.gz"
+Chef::Log.info "Will get MediaWiki from #{url}"
+
+remote_file "/tmp/mediawiki.tar.gz" do  
   source url
   owner node[:php][:fcgi][:user]
   not_if { File.exists? File.join(node[:mediawiki][:dir], "index.php") }
