@@ -16,7 +16,7 @@ sudo apt-get -y install git-core
 git clone http://github.com/nbudin/chef-repo.git
 
 sudo mkdir -p /etc/chef
-cat <<EOSCRIPT | /bin/bash
+cat <<EOSCRIPT | sudo /bin/bash
 cat <<EOF >/etc/chef/solo.rb
 file_cache_path "/tmp/chef-solo"
 cookbook_path "$(pwd)/chef-repo/cookbooks"
