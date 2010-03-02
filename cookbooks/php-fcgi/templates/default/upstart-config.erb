@@ -8,4 +8,4 @@ respawn
 env PHP_FCGI_CHILDREN=<%= @children %>
 env PHP_FCGI_MAX_REQUESTS=<%= @max_requests %>
 
-exec su <%= @node[:nginx][:user] %> -c '/usr/bin/php-cgi -q -b localhost:<%= @port %>'
+exec su <%= @node[:nginx][:user] %> -c '/usr/bin/php-cgi -q -b <%= @socket %>'

@@ -30,7 +30,7 @@ template "/etc/init/php-fcgi.conf" do
 
   variables(
     :user         => node[:php][:fcgi][:user],
-    :port         => node[:php][:fcgi][:port],
+    :socket       => node[:php][:fcgi][:socket],
     :children     => node[:php][:fcgi][:children],
     :max_requests => node[:php][:fcgi][:max_requests]
   )
