@@ -19,7 +19,7 @@
 
 include_recipe "mysql::client"
 
-directory node[:medawiki][:dir] do
+directory node[:mediawiki][:dir] do
   owner node[:php][:fcgi][:user]
   group node[:nginx][:group]
 end
