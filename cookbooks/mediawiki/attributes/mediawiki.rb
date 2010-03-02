@@ -1,0 +1,6 @@
+set_unless[:mediawiki][:version]       = "1.15.1"
+set_unless[:mediawiki][:dir]           = "/srv/mediawiki"
+set_unless[:mediawiki][:db][:name]     = "mediawiki"
+set_unless[:mediawiki][:db][:user]     = "mediawiki"
+set_unless[:mediawiki][:db][:password] = "mediawiki"
+set_unless[:mediawiki][:db][:setup][:user]     = "root"

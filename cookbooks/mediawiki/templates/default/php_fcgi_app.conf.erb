@@ -1,0 +1,19 @@
+server {
+  server_name <%= @server_name %>;
+  access_log <%= @node[:nginx][:log_dir] %>/<%= @params[:name] %>.access.log main;
+  listen 80;
+
+  location / {
+    root <%= @root_dir %>;
+    index index.php;
+    rewrite ^/index.php/([^?]*)(?:\?(.*))? /w/index.php?title=$1&$2;
+  }
+
+  location ~ \.php$ {
+    root <%= @root_dir %>;
+    fastcgi_pass   unix:<%= @node[:php][:fcgi][:socket] %>;
+    fastcgi_index  index.php;
+    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+}
