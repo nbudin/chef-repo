@@ -76,11 +76,8 @@ rescue
 end
 
 execute "mysql-install-privileges" do
-  password_arg = if node[:mysql][:server_root_password]
-    "-p#{node[:mysql][:server_root_password]}"
-  else
-    ""
-  end
+  password_arg = "-p#{node[:mysql][:server_root_password]}"
+  password_arg = "" if password_arg == "-p"
   command "/usr/bin/mysql -u root #{password_arg} < /etc/mysql/grants.sql"
   action :nothing
   subscribes :run, resources(:template => "/etc/mysql/grants.sql")
