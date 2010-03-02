@@ -48,8 +48,6 @@ mysql_database node[:wordpress][:db][:name] do
   host node[:wordpress][:db][:host]
   user node[:wordpress][:db][:user]
   password node[:wordpress][:db][:password]
-  setup_user node[:wordpress][:db][:setup][:user]
-  setup_password node[:wordpress][:db][:setup][:password]
 end
 
 template "#{node[:wordpress][:dir]}/wp-config.php" do
