@@ -43,8 +43,6 @@ end
 node[:wordpress][:db][:host] ||= node[:fqdn]
 
 template "#{node[:wordpress][:dir]}/wp-config.php" do
-  action :nothing
-
   owner node[:php][:fcgi][:user]
   group node[:nginx][:group]
   mode "0640"
@@ -59,8 +57,6 @@ mysql_database node[:wordpress][:db][:name] do
   host node[:wordpress][:db][:host]
   username node[:wordpress][:db][:user]
   password node[:wordpress][:db][:password]
-
-  notifies :create, resources(:template => "#{node[:wordpress][:dir]}/wp-config.php")
 end
 
 plugins_dir = File.join(node[:wordpress][:dir], "wp-content", "plugins")
