@@ -22,12 +22,6 @@ package "php5-mysql"
 
 require 'chef/provider/service/upstart'
 
-service "php-fcgi" do
-  provider Chef::Provider::Service::Upstart
-  action :nothing
-  supports [ :start, :stop, :restart, :reload, :status ]
-end
-
 template "/etc/init/php-fcgi.conf" do
   source "upstart-config.erb"
   owner "root"
@@ -40,8 +34,12 @@ template "/etc/init/php-fcgi.conf" do
     :children     => node[:php][:fcgi][:children],
     :max_requests => node[:php][:fcgi][:max_requests]
   )
+end
 
-  notifies :restart, resources(:service => "php-fcgi")
+service "php-fcgi" do
+  provider Chef::Provider::Service::Upstart
+  action [ :enable, :start ]
+  supports [ :start, :stop, :restart, :reload, :status ]
 end
 
 node[:php_apps].each do |name, properties|
