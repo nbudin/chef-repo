@@ -34,6 +34,8 @@ template "/etc/init/php-fcgi.conf" do
     :children     => node[:php][:fcgi][:children],
     :max_requests => node[:php][:fcgi][:max_requests]
   )
+
+  notifies :restart, resources(:service => "php-fcgi")
 end
 
 node[:php_apps].each do |name, properties|
