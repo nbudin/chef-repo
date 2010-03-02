@@ -16,8 +16,7 @@ sudo apt-get -y install git-core
 git clone http://github.com/nbudin/chef-repo.git
 
 sudo mkdir -p /etc/chef
-echo <<EOSCRIPT |sudo /bin/bash
-
+cat <<EOSCRIPT | /bin/bash
 cat <<EOF >/etc/chef/solo.rb
 file_cache_path "/tmp/chef-solo"
 cookbook_path "$(pwd)/chef-repo/cookbooks"
@@ -26,6 +25,7 @@ EOSCRIPT
 
 cat <<EOF >solo.json
 {
-  run_list: ["recipe[mysql::server]"]
+  "mysql" : { "server_root_password" : "" },
+  "run_list": ["recipe[mysql::server]"]
 }
 EOF
