@@ -10,6 +10,10 @@ module Opscode
       def db
         @@db ||= ::Mysql.new new_resource.host, new_resource.username, new_resource.password
       end
+
+      def root_db
+        @@root_db ||= ::Mysql.new new_resource.host, "root", node[:mysql][:server_root_password]
+      end
     end
   end
 end
