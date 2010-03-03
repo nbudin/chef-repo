@@ -9,6 +9,13 @@ define :nginx_site, :enable => true do
     mode 0755
   end
 
+  server_name = case params[:server_name]
+  when Array
+    params[:server_name].join(" ")
+  else
+    params[:server_name].to_s
+  end
+
   params[:config_template] ||= "nginx_site.conf.erb"
 
   template "#{node[:nginx][:conf_dir]}/sites-available/#{params[:name]}" do
