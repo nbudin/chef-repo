@@ -5,9 +5,9 @@ define :php_fcgi_app do
   params[:config_template] ||= "php_fcgi_app.conf.erb"
   params[:cookbook] ||= "php-fcgi"
 
-  nginx_site params[:name] do
-    params.each do |k, v|
-      Chef::Log.info("Sending #{k.inspect} -> #{v.inspect} to nginx_site")
+  pass_params = params  
+  nginx_site pass_params.delete(:name) do
+    pass_params.each do |k, v|
       send(k, v)
     end
   end
