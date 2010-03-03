@@ -1,0 +1,19 @@
+server {
+    server_name <%= @server_name %>;
+    access_log <%= @node[:nginx][:log_dir] %>/<%= @params[:name] %>.access.log main;
+    listen 80;
+
+    location / {
+       root <%= @root_dir %>;
+       autoindex on;
+
+       <% if @params[:require_auth] -%>
+       auth_basic "Protected Area";
+       auth_basic_user_file <%= @root_dir %>/.htpasswd;
+
+       location ~ /\.ht {
+           deny  all;
+       }
+       <% end -%>
+    }
+}
