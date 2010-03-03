@@ -117,5 +117,4 @@ node[:wordpress][:server_name] ||= node[:fqdn]
 php_fcgi_app "wordpress" do
   server_name node[:wordpress][:server_name]
   dir         node[:wordpress][:dir]
-  cookbook    "php-fcgi"
 end

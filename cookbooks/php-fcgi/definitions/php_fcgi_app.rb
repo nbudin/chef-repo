@@ -4,6 +4,7 @@ define :php_fcgi_app do
 
   nginx_site params[:name] do
     config_template "php_fcgi_app.conf.erb"
+    cookbook "php-fcgi" unless params[:cookbook]
     params.each do |k, v|
       send(k, v)
     end
