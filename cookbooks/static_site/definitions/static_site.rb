@@ -4,7 +4,7 @@ define :static_site do
   directory params[:dir] do
     owner node[:nginx][:user]
     group node[:nginx][:group]
-    mode 0644
+    mode 0755
   end
 
   server_name = case params[:server_name]
