@@ -90,7 +90,7 @@ require_recipe "logrotate"
 
 template "logrotate" do
   path "/etc/logrotate.d/nginx"
-  source "nginx.conf.erb"
+  source "logrotate.conf.erb"
   owner "root"
   group "root"
   mode 0644
