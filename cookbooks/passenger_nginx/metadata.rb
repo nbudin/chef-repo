@@ -8,6 +8,8 @@ version           "0.8"
   supports os
 end
 
+depends "logrotate"
+
 attribute "nginx/dir",
   :display_name => "Nginx Directory",
   :description => "Location of nginx configuration files",

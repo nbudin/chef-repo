@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: wordpress
+# Cookbook Name:: logrotate
 # Recipe:: default
 #
-# Copyright 2010, Nat Budin
+# Copyright 2009, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,12 +17,6 @@
 # limitations under the License.
 #
 
-node[:mediawiki_instances].each do |name, properties|
-  Chef::Log.info("Deploying MediaWiki instance #{name}")
-  mediawiki name do
-    properties.each do |k, v|
-      next if k.to_s == "name"
-      send(k, v)
-    end
-  end
+package "logrotate" do
+  action :upgrade
 end

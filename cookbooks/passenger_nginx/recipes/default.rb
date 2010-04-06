@@ -86,6 +86,16 @@ template "fastcgi_params" do
   notifies :reload, resources(:service => "nginx")
 end
 
+require_recipe "logrotate"
+
+template "logrotate" do
+  path "/etc/logrotate.d/nginx"
+  source "nginx.conf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+end
+
 directory "/etc/nginx/helpers"
 
 # helpers to be included in your vhosts
